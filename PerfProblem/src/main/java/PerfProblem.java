@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -28,13 +26,9 @@ class BigIntegerIterator {
 
 public class PerfProblem {
     public static void main(String[] args) throws InterruptedException, IOException {
-        BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
-        String line = buffer.readLine();
         for (Integer prime : getPrimes(Integer.parseInt(args[0]))) {
             System.out.print(prime + "\n");
         }
-//        BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
-//        String line = buffer.readLine();
     }
 
     private static List<Integer> getPrimes(int maxPrime) throws InterruptedException {

@@ -7,10 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GeneralTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private static ArrayList<Integer> primeNumbers = new ArrayList<>();
-    private final String maxIntPlusOneString = String.valueOf(Integer.MAX_VALUE + 1);
+    private static final ArrayList<Integer> primeNumbers = new ArrayList<>();
 
     @BeforeEach
     public void setPrinter() {
@@ -35,40 +32,41 @@ public class GeneralTest {
 
     @BeforeAll
     static void readExpectedPrimeNumbers() throws IOException, CsvException {
-        String fileName = "src/test/resources/primeNumbers.csv";
-        try (CSVReader reader = new CSVReaderBuilder(new FileReader(fileName))
-                .build()) {
+        try (InputStream stream = GeneralTest.class.getResourceAsStream("/primeNumbers.csv");
+             CSVReader reader = new CSVReaderBuilder(new InputStreamReader(stream)).build()) {
+
             List<String[]> r = reader.readAll();
-            r.forEach(line -> {
-                primeNumbers.add(Integer.parseInt(line[0]));
-            });
+            r.forEach(line -> primeNumbers.add(Integer.parseInt(line[0])));
         }
     }
 
     private String getExpectedPrimeNumbers(int maxPrimeNumber) {
-        String resultString = "";
-        for (Integer primeNumber: primeNumbers) {
+        StringBuilder resultString = new StringBuilder();
+        for (Integer primeNumber : primeNumbers) {
             if (primeNumber <= maxPrimeNumber) {
-                resultString = resultString + (primeNumber.toString() + "\n");
+                resultString.append(primeNumber.toString());
+                resultString.append("\n");
             } else break;
         }
-        return resultString;
+        return resultString.toString();
     }
 
     @ParameterizedTest
     @ValueSource(ints = {2, 100, 101, 10000})
     public void positiveTest(Integer inputValue) throws InterruptedException, IOException {
         String[] args = {inputValue.toString()};
-        PerfProblem.main(args);
-        assertEquals(getExpectedPrimeNumbers(inputValue), outContent.toString(), "Wrong prime numbers list");
+        PerfProblemAfterFixes.main(args);
+        String actual = new String(outContent.toByteArray(), StandardCharsets.UTF_8);
+        assertEquals(getExpectedPrimeNumbers(inputValue), actual, "Wrong prime numbers list");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "null", "-1", "1", "maxIntPlusOneString", "test string", "2.7"})
+    @ValueSource(strings = {"", "null", "-1", "1", "test string", "2.7"})
     public void negativeTest(String inputValue) throws InterruptedException, IOException {
         String[] args = {inputValue};
         PerfProblem.main(args);
-        assertEquals("", outContent.toString(), "Prime numbers list not empty");
+        String actual = new String(outContent.toByteArray(), StandardCharsets.UTF_8);
+        assertEquals("", actual, "Prime numbers list not empty");
     }
 
 
