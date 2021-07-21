@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -13,7 +13,7 @@ public class PerformanceTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-    private double getCalibrationVelocityForCPU() {
+    private static double getCalibrationVelocityForCPU() {
         double inputNumber = 2334345;
         final int retries = 1000000;
         long resultTime = 0;
@@ -38,10 +38,10 @@ public class PerformanceTest {
         }
     }
 
-    private double meanSqrtVelocity;
+    private static double meanSqrtVelocity;
 
-    @BeforeEach
-    public void calculateActualMeanVelocity() {
+    @BeforeAll
+    static void calculateActualMeanVelocity() {
         // get the runtime object associated with the current Java application
         Runtime runtime = Runtime.getRuntime();
 

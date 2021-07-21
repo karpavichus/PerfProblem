@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class BigIntegerIterator {
-    private final List<String> contain = new ArrayList<>(500); //зачем на одно значение массив из 500?
+    private final List<String> contain = new ArrayList<>(500);
     private final List<Integer> reference = new ArrayList<>(500);
 
     BigIntegerIterator(int i) {
@@ -43,7 +43,7 @@ public class PerfProblem {
             public BigIntegerIterator get() {
                 return new BigIntegerIterator(i++);
             }
-        }).limit(maxPrime).collect(Collectors.toList());//тут баг
+        }).limit(maxPrime).collect(Collectors.toList()); //тут баг, нужен limit(maxPrime-1)
 
         for (BigIntegerIterator integer : myFiller) {
             primeNumbers.add(integer.getContain());
@@ -54,11 +54,11 @@ public class PerfProblem {
         ExecutorService executors = Executors.newFixedThreadPool(Math.max(maxPrime / 100, 3000)); //столько потоков (3000) слишком, зачем брать макс? нужно выделять столько потоков сколько есть CPU
         synchronized (primeNumbersToRemove) {
             for (Integer candidate : primeNumbers) {
-                executors.submit(() -> { //переписать лямбды
+                executors.submit(() -> {
                     try {
                         isPrime(primeNumbers, candidate); //primeNumbers не участвует в параллельной работе, только чтение, можно использровать immutable лист
                     } catch (Exception e) {
-                        primeNumbersToRemove.add(candidate); //нельзя вот так через эксепшены, это долго
+                        primeNumbersToRemove.add(candidate);
                     }
                     latch.countDown();
                 });
@@ -73,7 +73,7 @@ public class PerfProblem {
     }
 
     private static void isPrime(List<Integer> primeNumbers, Integer candidate) throws Exception {
-        for (Integer j : primeNumbers.subList(0, candidate - 2)) { // не нужно выделять саблист, достаточно работы по индексам
+        for (Integer j : primeNumbers.subList(0, candidate - 2)) {
             if (candidate % j == 0) {
                 throw new Exception();
             }

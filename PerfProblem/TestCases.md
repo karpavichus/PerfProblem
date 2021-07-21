@@ -1,6 +1,6 @@
 ## Test cases
 - Run main method of PerfProblem class with input value
-- See reference data for prime numbers in [primeNumbers](./src/test/resources/primeNumbers.csv)
+- See reference data for prime numbers in [primeNumbers.csv](./src/test/resources/primeNumbers.csv)
 
 | Input value      | Expected result          |
 | :----:           | :----:                   |
