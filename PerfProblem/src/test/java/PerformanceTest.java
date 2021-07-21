@@ -59,8 +59,8 @@ public class PerformanceTest {
     }
 
     private void performanceTest(Consumer<String []> mainMethode) {
-        final long referenceTime = 530;
-        final double referenceSqrtVelocity = 6535.133; //mean sqrt velocity which got on my local machine
+        final long referenceTime = 50;
+        final double referenceSqrtVelocity = 6500; //mean sqrt velocity which got on my local machine
 
         //warm up
         PrintStream stdout = System.out;
