@@ -18,4 +18,5 @@
 - Найденные проблемы разрешены в копии оринальной программы [PerfProblemAfterFixes.java](./src/main/java/PerfProblemAfterFixes.java) 
 - В оригинальной программе добавлены комментарии [PerfProblem.java](./src/main/java/PerfProblem.java)
 - Перформанс тесты в [PerformanceTest.java](./src/test/java/PerformanceTest.java)
-- 
+- GitHub репозиторий [GitHub](https://github.com/karpavichus/PerfProblem)
+- CI/CD в [TeamCity](https://perf4jb.teamcity.com/project/PerfProblem) _PS: логин и пароль вы сможете найти в письме_
