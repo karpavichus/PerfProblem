@@ -73,7 +73,7 @@ public class PerformanceTest {
         boolean success = false;
         long minActualTime = Long.MAX_VALUE;
 
-        double adjustedTime = (meanSqrtVelocity / referenceSqrtVelocity) * referenceTime;
+        double adjustedTime = (referenceSqrtVelocity / meanSqrtVelocity) * referenceTime;
 
         for (int i = 0; i < 3; i++) {
             long startTime = System.currentTimeMillis();
