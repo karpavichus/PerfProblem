@@ -1,22 +1,10 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class BigIntegerIteratorAfterFix {
-    private final Integer contain;
-
-    BigIntegerIteratorAfterFix(int i) {
-        contain = i;
-    }
-
-    Integer getContain() {
-        return contain;
-    }
-}
-
 public class PerfProblemAfterFixes {
+
     public static void main(String[] args) {
         for (Integer prime : getPrimes(Integer.parseInt(args[0]))) {
             System.out.print(prime + "\n");
@@ -24,19 +12,15 @@ public class PerfProblemAfterFixes {
     }
 
     private static List<Integer> getPrimes(int maxPrime) {
-        List<Integer> primeNumbers = new ArrayList<>();
-        List<BigIntegerIteratorAfterFix> myFiller = Stream.generate(new Supplier<BigIntegerIteratorAfterFix>() {
+
+        List<Integer> primeNumbers = Stream.generate(new Supplier<Integer>() {
             int i = 2;
 
             @Override
-            public BigIntegerIteratorAfterFix get() {
-                return new BigIntegerIteratorAfterFix(i++);
+            public Integer get() {
+                return i++;
             }
-        }).limit(maxPrime-1).collect(Collectors.toList());
-
-        for (BigIntegerIteratorAfterFix integer : myFiller) {
-            primeNumbers.add(integer.getContain());
-        }
+        }).limit(maxPrime - 1).collect(Collectors.toList());
 
         // we use default common ForkJoinPool
         return primeNumbers.parallelStream()

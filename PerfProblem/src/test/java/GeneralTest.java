@@ -19,15 +19,17 @@ public class GeneralTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private static final ArrayList<Integer> primeNumbers = new ArrayList<>();
+    private PrintStream defaultStdout;
 
     @BeforeEach
     public void setPrinter() {
+        defaultStdout = System.out;
         System.setOut(new PrintStream(outContent));
     }
 
     @AfterEach
     public void removePrinter() {
-        System.setOut(null);
+        System.setOut(defaultStdout);
     }
 
     @BeforeAll
@@ -55,7 +57,7 @@ public class GeneralTest {
     @ValueSource(ints = {2, 100, 101, 10000})
     public void positiveTest(Integer inputValue) throws InterruptedException, IOException {
         String[] args = {inputValue.toString()};
-        PerfProblemAfterFixes.main(args);
+        PerfProblem.main(args);
         String actual = new String(outContent.toByteArray(), StandardCharsets.UTF_8);
         assertEquals(getExpectedPrimeNumbers(inputValue), actual, "Wrong prime numbers list");
     }

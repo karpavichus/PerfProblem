@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -25,9 +24,13 @@ class BigIntegerIterator {
 }
 
 public class PerfProblem {
-    public static void main(String[] args) throws InterruptedException, IOException {
-        for (Integer prime : getPrimes(Integer.parseInt(args[0]))) {
-            System.out.print(prime + "\n");
+    public static void main(String[] args) {
+        try {
+            for (Integer prime : getPrimes(Integer.parseInt(args[0]))) {
+                System.out.print(prime + "\n");
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

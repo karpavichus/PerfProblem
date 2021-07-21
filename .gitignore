@@ -1,4 +1,4 @@
 # Project exclude paths
 /PerfProblem/.gradle/
 /PerfProblem/build/
-/PerfProblem/out/production/classes/
+/PerfProblem/out/
