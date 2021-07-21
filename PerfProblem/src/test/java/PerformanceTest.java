@@ -58,16 +58,16 @@ public class PerformanceTest {
         System.out.println("Actual mean sqrt velocity = " + meanSqrtVelocity + " ops/ms");
     }
 
-    private void performanceTest(Consumer<String []> mainMethode) {
+    private void performanceTest(Consumer<String[]> mainMethod) {
         final long referenceTime = 50;
         final double referenceSqrtVelocity = 6500; //mean sqrt velocity which got on my local machine
+        final String[] args = {"10000"};
 
         //warm up
         PrintStream stdout = System.out;
         System.setOut(new PrintStream(outContent));
         for (int i = 0; i < 10; i++) {
-            String[] args = {"10000"};
-            mainMethode.accept(args);
+            mainMethod.accept(args);
         }
 
         boolean success = false;
@@ -77,9 +77,8 @@ public class PerformanceTest {
 
         for (int i = 0; i < 3; i++) {
             long startTime = System.currentTimeMillis();
-            String[] args = {"10000"};
 
-            mainMethode.accept(args);
+            mainMethod.accept(args);
 
             long endTime = System.currentTimeMillis();
 
@@ -92,8 +91,9 @@ public class PerformanceTest {
         }
         System.setOut(stdout);
         System.out.println("Actual time:  " + minActualTime + "ms");
-        if (!success) fail("Actual time for calculating list of prime numbers more than expected. Actual time: " + minActualTime + " ms" +
-                "\nExpected time: " + adjustedTime + " ms");
+        if (!success)
+            fail("Actual time for calculating list of prime numbers more than expected. Actual time: " + minActualTime + " ms" +
+                    "\nExpected time: " + adjustedTime + " ms");
     }
 
     @Test

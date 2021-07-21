@@ -55,7 +55,7 @@ public class GeneralTest {
 
     @ParameterizedTest
     @ValueSource(ints = {2, 100, 101, 10000})
-    public void positiveTest(Integer inputValue) throws InterruptedException, IOException {
+    public void positiveTest(Integer inputValue) {
         String[] args = {inputValue.toString()};
         PerfProblem.main(args);
         String actual = new String(outContent.toByteArray(), StandardCharsets.UTF_8);
@@ -64,12 +64,10 @@ public class GeneralTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", "null", "-1", "1", "test string", "2.7"})
-    public void negativeTest(String inputValue) throws InterruptedException, IOException {
+    public void negativeTest(String inputValue) {
         String[] args = {inputValue};
         PerfProblem.main(args);
         String actual = new String(outContent.toByteArray(), StandardCharsets.UTF_8);
         assertEquals("", actual, "Prime numbers list not empty");
     }
-
-
 }

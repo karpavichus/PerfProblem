@@ -43,7 +43,7 @@ public class PerfProblem {
             public BigIntegerIterator get() {
                 return new BigIntegerIterator(i++);
             }
-        }).limit(maxPrime).collect(Collectors.toList());
+        }).limit(maxPrime).collect(Collectors.toList());//тут баг
 
         for (BigIntegerIterator integer : myFiller) {
             primeNumbers.add(integer.getContain());
